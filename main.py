@@ -81,15 +81,19 @@ def all_repl_user():
       return render_template("invalidStyle.html")
     else:
       if style == "default":
-        body = {'query': "query UserData { userByUsername(username: \""+str(repl_user)+"\") { image } }"}
+        body = {'query': "query UserData { userByUsername(username: \""+str(repl_user)+"\") { "+USER+" } }"}
+        img_body = {'query': "query UserData { userByUsername(username: \""+str(repl_user)+"\") { image } }"}
         # request2 = Requests.post(url, data=body, headers=headers)
-        avatar_url = parse_json(json.loads(Requests.post(url, data=body, headers=headers).text)['data']['userByUsername']['image'])
+        avatar_url = parse_json(json.loads(Requests.post(url, data=img_body, headers=headers).text)['data']['userByUsername']['image'])
         avatar_url = avatar_url.replace("\"", "")
         filename = avatar_url.split("/")[-1]
         if "\"" in filename:
           filename = filename.replace("\"", "")
         res = Requests.get(avatar_url, stream = True)
+        cycles = json.loads(Requests.post(url, data=body, headers=headers).text)['data']['userByUsername']['karma']
+        nickname = json.loads(Requests.post(url, data=body, headers=headers).text)['data']['userByUsername']['fullName']
 
+  
         if res.status_code == 200:
           res.raw.decode_content = True
             
@@ -102,7 +106,7 @@ def all_repl_user():
         else:
           pass
           
-        return render_template("user.html", avatar=avatar, user=repl_user)
+        return render_template("user.html", avatar=avatar, user=repl_user, cycles=cycles, nickname=nickname)
       
 @app.errorhandler(404)
 def page_not_found(error):

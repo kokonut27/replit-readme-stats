@@ -12,8 +12,11 @@ h2 {
   font-family: 'Segoe UI', Ubuntu, Sans-Serif;
 }
 
+li, p {
+  display: inline;
+}
+
 #replCard {
-  position: relative;
   border-radius: 15px;
   border: 1px solid #6b7678; 
   padding: 7.5px;

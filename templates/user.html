@@ -4,4 +4,10 @@
 <div id="replCard">
   <img src="{{ url_for('static', filename=avatar) }}" width="50" height="50"/>
   <h2> {{ user }}'s Replit Stats </h2>
+  <br><br>
+  <li>
+    <ul>Nickname: <p> {{ nickname }} </p></ul>
+    <ul>Cycles: <p> {{ cycles }} </p></ul>
+    <ul>Total Repls: <p> {{ total_repls }} </p></ul>
+  </li>
 </div>
