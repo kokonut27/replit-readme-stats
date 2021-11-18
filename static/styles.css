@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+}
+
+img {
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+h2 {
+  display: inline;
+  font-family: 'Segoe UI', Ubuntu, Sans-Serif;
+}
+
+#replCard {
+  position: relative;
+  border-radius: 15px;
+  border: 1px solid #6b7678; 
+  padding: 7.5px;
+  width: 30%;
+}

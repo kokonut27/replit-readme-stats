@@ -1,0 +1,3 @@
+query = {'query':'query UserCycles { userByUsername(username: "JBloves27") {karma}}'}
+request = json.loads(requests.post(url, data=query, headers=headers).text)
+print(request['data']['userByUsername'])
