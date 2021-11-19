@@ -59,7 +59,7 @@ card_styles = ["default", "dark", "gradient", "gray"]
 
 @app.route('/')
 def index():
-  return ""
+  return render_template("index.html")
 
 @app.route('/api', methods=["POST", "GET"])
 def all_repl_user():
