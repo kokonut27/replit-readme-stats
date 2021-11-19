@@ -1,4 +1,5 @@
 import os
+os.system('pip install requests')
 import json
 import requests
 from flask import Flask, render_template, send_from_directory, url_for, request
