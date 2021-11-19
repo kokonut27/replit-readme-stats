@@ -9,10 +9,6 @@ app = Flask(__name__,
             static_folder='static',
             template_folder='templates')
 app.config['static'] = 'static/'
-import requests
-from flask import Flask, render_template, request, send_from_directory
-
-
 
 ROLES = """
 	id
