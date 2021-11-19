@@ -1,6 +1,6 @@
 import os
 import json
-import requests as Requests
+import requests
 from flask import Flask, render_template, send_from_directory, url_for, request
 import shutil
 
@@ -44,11 +44,11 @@ def parse_json(tjson):
 
 def UserData(username):
   body = {'query': "query UserData { userByUsername(username: \""+str(username)+"\") { "+USER+" } }"}
-  requeste = Requests.post(url, data=body, headers=headers) # ['data']['userByUsername']
+  requeste = requests.post(url, data=body, headers=headers) # ['data']['userByUsername']
   if requeste.status_code != 200:
     raise Exception("Invalid User: "+username)
   else:
-    return parse_json(json.loads(Requests.post(url, data=body, headers=headers).text)['data']['userByUsername'])
+    return parse_json(json.loads(requests.post(url, data=body, headers=headers).text)['data']['userByUsername'])
   request = requests.post(url, data=body, headers=headers) # ['data']['userByUsername']
   if request.status_code != 200:
     raise Exception("Invalid User: "+username)
@@ -69,7 +69,7 @@ def all_repl_user():
     return render_template("invalidUser.html")
   if style == None:
     return render_template("invalidStyle.html")
-  userexist = Requests.get(f"https://replit.com/@{repl_user}/")
+  userexist = requests.get(f"https://replit.com/@{repl_user}/")
   if userexist.status_code != 200:
     return render_template("invalidUser.html")
   else:
@@ -80,14 +80,14 @@ def all_repl_user():
         body = {'query': "query UserData { userByUsername(username: \""+str(repl_user)+"\") { "+USER+" } }"}
         img_body = {'query': "query UserData { userByUsername(username: \""+str(repl_user)+"\") { image } }"}
         # request2 = Requests.post(url, data=body, headers=headers)
-        avatar_url = parse_json(json.loads(Requests.post(url, data=img_body, headers=headers).text)['data']['userByUsername']['image'])
+        avatar_url = parse_json(json.loads(requests.post(url, data=img_body, headers=headers).text)['data']['userByUsername']['image'])
         avatar_url = avatar_url.replace("\"", "")
         filename = avatar_url.split("/")[-1]
         if "\"" in filename:
           filename = filename.replace("\"", "")
-        res = Requests.get(avatar_url, stream = True)
-        cycles = json.loads(Requests.post(url, data=body, headers=headers).text)['data']['userByUsername']['karma']
-        nickname = json.loads(Requests.post(url, data=body, headers=headers).text)['data']['userByUsername']['fullName']
+        res = requests.get(avatar_url, stream = True)
+        cycles = json.loads(requests.post(url, data=body, headers=headers).text)['data']['userByUsername']['karma']
+        nickname = json.loads(requests.post(url, data=body, headers=headers).text)['data']['userByUsername']['fullName']
 
   
         if res.status_code == 200:
