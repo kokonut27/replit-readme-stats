@@ -10,16 +10,6 @@
           "use": "@now/static"
         }
     ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/app/main.py"
-        },
-        {
-          "src": "/api/(.*)",
-          "dest": "/app/main.py"
-        }
-    ],
     "redirects": [
       {
         "source": "/",
