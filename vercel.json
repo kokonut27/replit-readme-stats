@@ -10,10 +10,14 @@
           "use": "@now/static"
         }
     ],
-    "redirects": [
-      {
-        "src": "/",
-        "destination": "https://github.com/JBYT27/replit-readme-stats"
-      }
+    "routes": [
+        {
+          "src": "/api/",
+          "dest": "main.py"
+        },
+        {
+            "src": "/",
+            "dest": "main.py"
+        }
     ]
 }
