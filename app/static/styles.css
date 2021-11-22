@@ -18,7 +18,8 @@ li, p {
 
 #replCard {
   border-radius: 15px;
-  border: 1px solid #6b7678; 
+  border: 1px solid #6b7678; /* #6b7678 */
+  background-color: #e4e8eb; /* #d9dcde */
   padding: 7.5px;
   width: 30%;
 }
