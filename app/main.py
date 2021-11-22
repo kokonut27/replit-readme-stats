@@ -69,7 +69,7 @@ def all_repl_user():
   if repl_user == None:
     return render_template("invalidUser.html")
   if style == None:
-    return render_template("invalidStyle.html")
+    style = "default"
   userexist = requests.get(f"https://replit.com/@{repl_user}/")
   if userexist.status_code != 200:
     return render_template("invalidUser.html")
