@@ -19,5 +19,11 @@
           "src": "/api/(.*)",
           "dest": "/app/main.py"
         }
+    ],
+    "redirects": [
+      {
+        "source": "/",
+        "destination": "https://github.com/JBYT27/replit-readme-stats"
+      }
     ]
 }
