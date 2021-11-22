@@ -94,7 +94,7 @@ def all_repl_user():
         if res.status_code == 200:
           res.raw.decode_content = True
             
-          with open("static/"+filename, 'wb') as f:
+          with open("app/static/"+filename, 'wb') as f:
             shutil.copyfileobj(res.raw, f)
           
           avatar = filename 
