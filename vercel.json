@@ -12,6 +12,10 @@
     ],
     "routes": [
         {
+          "src": "/api/",
+          "dest": "./user.html"
+        },
+        {
             "src": "/",
             "dest": "./main.py"
         }
