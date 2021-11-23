@@ -1,2 +1,2 @@
 language = "python3"
-run = "python server/api/main.py"
+run = "python server/main.py"
