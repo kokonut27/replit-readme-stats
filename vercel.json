@@ -12,12 +12,17 @@
     ],
     "routes": [
         {
-          "src": "/api/",
-          "dest": "/templates/user.html"
+          "src": "/api", 
+          "methods": ["POST"],
+          "dest": "/main.py" 
+        },
+        {
+          "src": "/api/(?<username>[^/]*)&(?<style>[^/]*)",
+          "dest": "/main.py?username=$username&style=$style"
         },
         {
             "src": "/",
-            "dest": "./main.py"
+            "dest": "/main.py"
         }
     ]
 }
