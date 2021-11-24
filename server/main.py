@@ -17,6 +17,26 @@ ROLES = """
 	key
 	tagline
 """
+SUBSCRIPTION = """
+	id
+	planId
+	quantity
+	timeCreated
+"""
+BOARD = """
+	id
+	name
+	color
+	description
+"""
+LANGUAGE = """
+	id
+	key
+	displayName
+	tagline
+	icon
+	category
+"""
 USER = f"""
 	id
 	fullName
@@ -32,6 +52,71 @@ USER = f"""
 	roles {{
 					{ROLES}
 				}}
+"""
+REPL = f"""
+	id
+	url
+	title
+	description
+	timeCreated
+	size
+	imageUrl
+	isPrivate
+	isAlwaysOn
+  user {{
+					{USER}
+	}}
+	lang {{
+					{LANGUAGE}
+	}}
+	origin {{
+					url
+	}}
+"""
+COMMENT = f"""
+	id
+	body
+	timeCreated
+	url
+	isAnswer
+	voteCount
+	canVote
+	hasVoted
+	post {{
+					id
+	}}
+  user {{
+					{USER}
+	}}
+"""
+POST = f"""
+	id
+	title
+	body
+	url
+	commentCount
+	isHidden
+	isPinned
+	isLocked
+	isAnnouncement
+	timeCreated
+	isAnswered
+  isAnswerable		
+	voteCount
+	canVote
+	hasVoted
+	user {{
+    {USER}
+  }}
+	repl {{
+					{REPL}
+	}}
+	board {{
+					{BOARD}
+	}}
+	answer {{
+					{COMMENT}
+	}}
 """
 
 url = 'https://replit.com/graphql'
@@ -50,11 +135,12 @@ def UserData(username):
     raise Exception("Invalid User: "+username)
   else:
     return parse_json(json.loads(requests.post(url, data=body, headers=headers).text)['data']['userByUsername'])
-  request = requests.post(url, data=body, headers=headers) # ['data']['userByUsername']
-  if request.status_code != 200:
-    raise Exception("Invalid User: "+username)
-  else:
-    return parse_json(json.loads(requests.post(url, data=body, headers=headers).text)['data']['userByUsername'])
+
+
+
+# print(UserData("JBloves27"))
+
+
 
 card_styles = ["default", "dark", "gradient", "gray"]
 
@@ -102,6 +188,21 @@ def all_repl_user():
           f.close()
         else:
           pass
+        
+        grade = 0
+        '''
+        Grades:
+        If grade = 1: Regular grade (A)
+        If grade = 2: A little higher grade (A+)
+        If grade = 3: Pretty high grade (A++)
+        If grade = 4: High grade (S)
+        If grade = 5: Super high grade (S+)
+        If grade = 6: Pretty much only top 10% (S++)
+        '''
+
+        if int(cycles) >= 2000:
+          grade+=1
+        
           
         return render_template("user.html", avatar=avatar, user=repl_user, cycles=cycles, nickname=nickname)
       
