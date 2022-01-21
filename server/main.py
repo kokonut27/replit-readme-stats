@@ -152,45 +152,39 @@ def index():
 def all_repl_user():
   repl_user = request.args.get('username')
   style = request.args.get('style')
-  if repl_user == None:
+  if repl_user is None:
     return render_template("invalidUser.html")
-  if style == None:
+  if style is None:
     style = "default"
   userexist = requests.get(f"https://replit.com/@{repl_user}/")
   if userexist.status_code != 200:
     return render_template("invalidUser.html")
-  else:
-    if style not in card_styles:
-      return render_template("invalidStyle.html")
-    else:
-      if style == "default":
-        body = {'query': "query UserData { userByUsername(username: \""+str(repl_user)+"\") { "+USER+" } }"}
-        img_body = {'query': "query UserData { userByUsername(username: \""+str(repl_user)+"\") { image } }"}
-        # request2 = Requests.post(url, data=body, headers=headers)
-        avatar_url = parse_json(json.loads(requests.post(url, data=img_body, headers=headers).text)['data']['userByUsername']['image'])
-        avatar_url = avatar_url.replace("\"", "")
-        filename = avatar_url.split("/")[-1]
-        if "\"" in filename:
-          filename = filename.replace("\"", "")
-        res = requests.get(avatar_url, stream = True)
-        cycles = json.loads(requests.post(url, data=body, headers=headers).text)['data']['userByUsername']['karma']
-        nickname = json.loads(requests.post(url, data=body, headers=headers).text)['data']['userByUsername']['fullName']
+  if style not in card_styles:
+    return render_template("invalidStyle.html")
+  if style == "default":
+    body = {'query': "query UserData { userByUsername(username: \""+str(repl_user)+"\") { "+USER+" } }"}
+    img_body = {'query': "query UserData { userByUsername(username: \""+str(repl_user)+"\") { image } }"}
+    # request2 = Requests.post(url, data=body, headers=headers)
+    avatar_url = parse_json(json.loads(requests.post(url, data=img_body, headers=headers).text)['data']['userByUsername']['image'])
+    avatar_url = avatar_url.replace("\"", "")
+    filename = avatar_url.split("/")[-1]
+    if "\"" in filename:
+      filename = filename.replace("\"", "")
+    res = requests.get(avatar_url, stream = True)
+    cycles = json.loads(requests.post(url, data=body, headers=headers).text)['data']['userByUsername']['karma']
+    nickname = json.loads(requests.post(url, data=body, headers=headers).text)['data']['userByUsername']['fullName']
 
-  
-        if res.status_code == 200:
-          res.raw.decode_content = True
-            
-          with open("server/static/"+filename, 'wb') as f:
-            shutil.copyfileobj(res.raw, f)
-          
-          avatar = filename 
-          # return send_from_directory(app.config['static'], filename, as_attachment=True)
-          f.close()
-        else:
-          pass
-        
-        grade = 0
-        '''
+
+    if res.status_code == 200:
+      res.raw.decode_content = True
+
+      with open("server/static/"+filename, 'wb') as f:
+        shutil.copyfileobj(res.raw, f)
+
+      avatar = filename 
+      # return send_from_directory(app.config['static'], filename, as_attachment=True)
+      f.close()
+    '''
         Grades:
         If grade = 1: Regular grade (A)
         If grade = 2: A little higher grade (A+)
@@ -200,11 +194,9 @@ def all_repl_user():
         If grade = 6: Pretty much only top 10% (S++)
         '''
 
-        if int(cycles) >= 2000:
-          grade+=1
-        
-          
-        return render_template("user.html", avatar=avatar, user=repl_user, cycles=cycles, nickname=nickname)
+    if int(cycles) >= 2000:
+      grade = 0 + 1
+    return render_template("user.html", avatar=avatar, user=repl_user, cycles=cycles, nickname=nickname)
       
 @app.errorhandler(404)
 def page_not_found(error):
